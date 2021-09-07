@@ -5,7 +5,6 @@ const ImageLoaderFactory = (limit = 15, renderer = null) => {
     return {
         limit: limit,
         page: 1,
-        tempImg: 'https://atlan.com/assets/static/loading.77c2c98.9727475.gif',
         loading: false,
         renderer: renderer,
         load: async function () {
@@ -32,14 +31,23 @@ const imageLoader = ImageLoaderFactory(15, renderImages);
 async function renderImages(images) {
     const image_wrapper_template = __('#image--wrapper');
     const frag = document.createDocumentFragment();
+    const imageElems = [];
     images.forEach(url => {
         const elem = image_wrapper_template.content.cloneNode(true);
         const imgElem = elem.querySelector('.image');
-        imgElem.src = imageLoader.tempImg;
         imgElem.dataset.src = url;
         frag.appendChild(elem);
+        imageElems.push(imgElem);
     });
     image_row.appendChild(frag);
+    setTimeout(() => {
+        imageElems.forEach(elm => {
+            const url = elm.dataset.src;
+            fetch(url).then(res => res.blob()).then(x => {
+                elm.src = URL.createObjectURL(x);
+            });
+        });
+    }, 0);
 }
 
 __(".load-more").addEventListener('click', async () => {

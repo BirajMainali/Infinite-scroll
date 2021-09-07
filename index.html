@@ -11,7 +11,7 @@
 <div class="row text-center mt-3">
     <template id="image--wrapper">
         <div class="col-12 col-md-4" style="align-items: center">
-            <img src="" class="rounded image border" height="90%" width="90%" alt="..."/>
+            <img src="https://atlan.com/assets/static/loading.77c2c98.9727475.gif" class="rounded image border" height="90%" width="90%" alt="..."/>
         </div>
     </template>
 </div>
@@ -20,6 +20,16 @@
         Load More
     </button>
 </div>
+<style>
+    img {
+        transition: all .3s;
+    }
+    img:hover {
+        cursor: pointer;
+        filter: saturate(2.5);
+        transform: translateY(-10px);
+    }
+</style>
 <script src="app.js"></script>
 </body>
 </html>
